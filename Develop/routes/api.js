@@ -27,23 +27,30 @@ router.post("/api/workouts", (req, res) => {
 // respond with the updated workout json
 router.put("/api/workouts/:id", (req, res) => {
   // CODE HERE
-  // db.findByIdAndUpdate(req.params.id, {
-  //   $push : {
-  //     exercises: req.body
-  //   }
-  // })
-  //   .then(data => {
-  //     res.json(data);
-  //   })
-  //   .catch(err => {
-  //     res.status(400).json(err);
-  //   })
+  console.log(req.body);
+  db.findByIdAndUpdate(req.params.id, {
+    $push : {
+      exercises: req.body
+    }
+  })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    })
 });
 
 // Respond with json for all the workouts in an array.
 router.get("/api/workouts", (req, res) => {
   // CODE HERE
   db.Workout.find({})
+    .then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    })
 });
 
 // Respond with json array containing the last 7 workouts
